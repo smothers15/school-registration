@@ -1,0 +1,9 @@
+extends ../layout
+
+block content
+    h3= course.name
+
+    div
+        p Instructor: #{course.instructor_name}
+        p Department: #{course.department}
+        p= course.description
