@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const courseController = require('../controllers/courseController.js');
-
+const studentController = require('../controllers/studentController.js');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
