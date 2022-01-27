@@ -2,7 +2,8 @@ extends ../layout
 
 block content
     h3= course.name
-
+    a(href=`/courses/edit/${course.id}`) Edit Course
+    a(href=`/courses/delete/${course.id}`) Delete Course
     div
         p Instructor: #{course.instructor_name}
         p Department: #{course.department}

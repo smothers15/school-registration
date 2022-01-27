@@ -1,0 +1,25 @@
+mixin courseForm(course, departments, saveUrl, cancelUrl)
+
+    div.form-container
+        form(action=saveUrl method='post')
+            div.form-input
+                label(for='name') Course Title
+                input(id='name' name='name' value=course.name)
+
+            div.form-input
+                label(for='instructor_name') Instructor
+                input(id='instructor_name' name='instructor_name' value=course.instructor_name)
+
+            div.form-input
+                label(for='department') Department
+                select(id='department' name='department')
+                    each department in departments
+                        option(value=department selected=(department === course.department)) #{department}
+
+            div.form-input
+                label(for='description') Course Description
+                textarea(id='description' name='description' rows= 10 cols=80) #{course.description}
+
+            div.form-buttons
+                a.button(href=cancelUrl) Cancel
+                button.button(type='submit') Save
