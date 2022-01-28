@@ -1,0 +1,9 @@
+extends ../layout
+
+block content
+
+    a(href=`/students/edit/${student.id}`) Edit Student
+    a(href=`/students/delete/${student.id}`) Delete Student
+    div
+        h3 Name: #{student.first_name} #{student.last_name}
+        p Grade Level: #{student.grade_level}
