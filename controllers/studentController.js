@@ -1,4 +1,4 @@
-const {Student} = require('../models')
+const {Student, Course, StudentCourses} = require('../models')
 
 //view all
 module.exports.viewAll = async function(req, res) {
@@ -7,8 +7,18 @@ module.exports.viewAll = async function(req, res) {
 }
 //profile
 module.exports.viewProfile = async function(req, res) {
-    const student = await Student.findByPk(req.params.id);
-    res.render('student/profile', {student});
+    const student = await Student.findByPk(req.params.id, {
+        include: 'courses'
+    });
+    const courses = await Course.findAll();
+    let avalibleCourses = [];
+    for (let i=0; i<courses.length; i++){
+        if(!studentHasCourse(student, courses[i])){
+            avalibleCourses.push(courses[i]);
+        }
+    }
+
+    res.render('student/profile', {student, avalibleCourses});
 }
 //render add
 module.exports.renderAddForm = function(req, res){
@@ -54,4 +64,21 @@ module.exports.deleteStudent = async function(req, res) {
         }
     });
     res.redirect('/students');
+}
+
+function studentHasCourse(student, course){
+    for (let i=0; i<student.courses.length; i++){
+        if (course.id === student.courses[i].id){
+            return true
+        }
+    }
+    return false
+}
+
+module.exports.enrollStudent = async function(req, res) {
+    await StudentCourses.create({
+        student_id: req.params.studentId,
+        course_id: req.body.course
+    });
+    res.redirect(`/students/profile/${req.params.studentId}`);
 }
