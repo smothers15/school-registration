@@ -9,25 +9,31 @@ block content
         p Grade Level: #{student.grade_level}
 
     h4 Student Courses
-    form(action=`/students/${student.id}/enroll/` method='post')
-        select(name='course' id='course' autocomplete=off)
-            each course in avalibleCourses
-                option(value=course.id) #{course.name}
-        button.button(type='submit') Enroll
+    if avalibleCourses.length>0
+        form(action=`/students/${student.id}/enroll/` method='post')
+            select(name='course' id='course' autocomplete=off)
+                each course in avalibleCourses
+                    option(value=course.id) #{course.name}
+            button.button.primary(type='submit') Enroll
+    else
+        p No remaining courses are available to enroll in.
     div.courses
-        table
-            thead
-                tr
-                    th Course Title
-                    th Instructor
-                    th Department
-                    th
-            tbody
-                each course in student.courses
+        if student.courses.length>0
+            table
+                thead
                     tr
-                        td= course.name
-                        td= course.instructor_name
-                        td= course.department
-                        td
-                            a(href=`/courses/profile/${course.id}`) View Course
-                            a(href=`/students/${student.id}/removeCourse/${course.id}`) Remove Course
+                        th Course Title
+                        th Instructor
+                        th Department
+                        th
+                tbody
+                    each course in student.courses
+                        tr
+                            td= course.name
+                            td= course.instructor_name
+                            td= course.department
+                            td
+                                a(href=`/courses/profile/${course.id}`) View Course
+                                a(href=`/students/${student.id}/removeCourse/${course.id}`) Remove Course
+        else
+            p Student has not enrolled in any courses.
