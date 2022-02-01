@@ -25,4 +25,7 @@ router.get('/students/delete/:id', studentController.deleteStudent);
 
 router.post('/students/:studentId/enroll/', studentController.enrollStudent);
 router.get('/students/:studentId/removeCourse/:courseId', studentController.removeCourse);
+
+router.post('/courses/:courseId/enroll', courseController.enrollStudent);
+router.get('/courses/:courseId/removeStudent/:studentId', courseController.removeStudent);
 module.exports = router;

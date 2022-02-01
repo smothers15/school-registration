@@ -82,3 +82,13 @@ module.exports.enrollStudent = async function(req, res) {
     });
     res.redirect(`/students/profile/${req.params.studentId}`);
 }
+
+module.exports.removeCourse = async function(req, res) {
+    await StudentCourses.destroy({
+        where: {
+            student_id: req.params.studentId,
+            course_id: req.params.courseId
+        }
+    });
+    res.redirect(`/students/profile/${req.params.studentId}`)
+}
